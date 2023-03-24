@@ -7,6 +7,7 @@ public class Target : MonoBehaviour
 {
     private Rigidbody _targetRB;
     private GameManager _gameManager;
+    private AudioManager _audioManager;
     [SerializeField] int _pointValue = 1;
 
     [Header("Effects")]
@@ -18,16 +19,20 @@ public class Target : MonoBehaviour
     public float _xRange = 4;
     public float _ySpawnPos = 6;
 
-    private bool _inputEnabled = true;
-
     // Start is called before the first frame update
     void Start()
     {
         _gameManager = FindObjectOfType<GameManager>(); 
+        _audioManager = FindObjectOfType<AudioManager>();
         _targetRB = GetComponent<Rigidbody>();
         _targetRB.AddForce(RandomForce(), ForceMode.Impulse);
         _targetRB.AddTorque(RandomTorque(), RandomTorque(), RandomTorque(), ForceMode.Impulse);
         transform.position = RandomSpawnPos();
+    }
+
+    private void Update()
+    {
+        if (!_gameManager._isGameActive) Destroy(gameObject);
     }
 
     private void OnMouseDown()
@@ -37,17 +42,16 @@ public class Target : MonoBehaviour
         Instantiate(_explosionParticles, transform.position, _explosionParticles.transform.rotation);
         if (gameObject.CompareTag("Bad"))
         {
-            _gameManager.PlayBombSound();
+            _audioManager.PlayBombSound();
             _gameManager.GameOver();
-            _inputEnabled = false;
         }
-        if (gameObject.CompareTag("Good")) _gameManager.PlayBiteSound();
-
+        if (gameObject.CompareTag("Good")) _audioManager.PlayBiteSound();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         Destroy(gameObject);
+        _gameManager.UpdateScoreBoard(-_pointValue);
     }
 
     Vector3 RandomForce()
