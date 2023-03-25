@@ -130,8 +130,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c98d38fa09d364ba6297c12e63e04e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pointValue: 10
+  _pointValue: 5
   _explosionParticles: {fileID: 3199346384015752365, guid: 307229a5540374aae98859caad2128a3, type: 3}
+  _floatingPoints: {fileID: 9199052655216311155, guid: 24dcc46ffe16c8f4680e3f6e597e8d35, type: 3}
+  _sensor: {fileID: 6607124039878112281, guid: 714ba5448c6b6544eaf1872cf054dd53, type: 3}
   _minSpeed: 10
   _maxSpeed: 14
   _maxTorque: 10

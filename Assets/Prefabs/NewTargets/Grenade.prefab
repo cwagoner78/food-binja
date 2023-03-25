@@ -526,6 +526,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _pointValue: 0
   _explosionParticles: {fileID: 2088871590894813759, guid: 745208c9d6e104225bd99e1ab894e3bb, type: 3}
+  _floatingPoints: {fileID: 8391798397340991113, guid: 495b0428a4cc2434c8ae18cb76bf1c28, type: 3}
   _minSpeed: 10
   _maxSpeed: 14
   _maxTorque: 10

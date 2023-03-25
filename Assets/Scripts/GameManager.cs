@@ -33,16 +33,24 @@ public class GameManager : MonoBehaviour
     private int _level = 1;
     private int _difficulty;
 
+    private AudioSource _chompSound;
+
 
     void Start()
     {
         SetHighScores();
+        _chompSound = GameObject.Find("ChompSource").GetComponent<AudioSource>();
     }
 
     void Update()
     {
         UpdateLevel();
         if (Input.GetKeyDown(KeyCode.R)) ResetHighScores();
+        if (Input.GetMouseButtonDown(0))
+        {
+            _chompSound.pitch = Random.Range(0.9f, 1.1f);
+            _chompSound.Play();
+        } 
     }
 
     void SetHighScores()
@@ -101,35 +109,36 @@ public class GameManager : MonoBehaviour
     {
 
         _score += scoreToAdd;
+
         if (_score <= 0) _score = 0;
         _scoreText.text = "Score: " + _score;
 
         if (_difficulty == 0)
         {
-            if (PlayerPrefs.GetInt("High Score Easy") < _score)
+            if (!_isGameActive)
             {
-                PlayerPrefs.SetInt("High Score Easy", _score);
-                StartCoroutine(NewHighScoreFlash());
+                if (_score > PlayerPrefs.GetInt("High Score Easy")) StartCoroutine(NewHighScoreFlash());
+                if (PlayerPrefs.GetInt("High Score Easy") < _score) PlayerPrefs.SetInt("High Score Easy", _score);
+                _highScoreTextE.text = "Easy: " + PlayerPrefs.GetInt("High Score Easy");
             } 
-            _highScoreTextE.text = "Easy: " + PlayerPrefs.GetInt("High Score Easy");
         }
         else if (_difficulty == 1)
         {
-            if (PlayerPrefs.GetInt("High Score Medium") < _score)
+            if (!_isGameActive)
             {
-                PlayerPrefs.SetInt("High Score Medium", _score);
-                StartCoroutine(NewHighScoreFlash());
+                if (_score > PlayerPrefs.GetInt("High Score Medium")) StartCoroutine(NewHighScoreFlash());
+                if (PlayerPrefs.GetInt("High Score Medium") < _score) PlayerPrefs.SetInt("High Score Medium", _score);
+                _highScoreTextM.text = "Medium: " + PlayerPrefs.GetInt("High Score Medium");
             } 
-            _highScoreTextM.text = "Medium: " + PlayerPrefs.GetInt("High Score Medium");
         }
         else
         {
-            if (PlayerPrefs.GetInt("High Score Hard") < _score)
+            if (!_isGameActive)
             {
-                PlayerPrefs.SetInt("High Score Hard", _score);
-                StartCoroutine(NewHighScoreFlash());
+                if (_score > PlayerPrefs.GetInt("High Score Hard")) StartCoroutine(NewHighScoreFlash());
+                if (PlayerPrefs.GetInt("High Score Hard") < _score) PlayerPrefs.SetInt("High Score Hard", _score);
+                _highScoreTextH.text = "Hard: " + PlayerPrefs.GetInt("High Score Hard");
             } 
-            _highScoreTextH.text = "Hard: " + PlayerPrefs.GetInt("High Score Hard");
         }
     }
 

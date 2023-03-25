@@ -13,7 +13,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 571908377718806159, guid: 56f986b2e2bd2e84c921e7a35302b24f, type: 3}
       propertyPath: m_TagString
-      value: Bad
+      value: Skull
       objectReference: {fileID: 0}
     - target: {fileID: 823527002755758548, guid: 56f986b2e2bd2e84c921e7a35302b24f, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -152,6 +152,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!135 &1738774537217977176
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8393094588665705602}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.04
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &7248341641328363296
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -177,23 +190,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c98d38fa09d364ba6297c12e63e04e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pointValue: 0
+  _pointValue: -100
   _explosionParticles: {fileID: 7303472089845130122, guid: 6cbc21f5e9162483993a2b84b14d5ac8, type: 3}
+  _floatingPoints: {fileID: 9199052655216311155, guid: 24dcc46ffe16c8f4680e3f6e597e8d35, type: 3}
+  _sensor: {fileID: 6607124039878112281, guid: 714ba5448c6b6544eaf1872cf054dd53, type: 3}
   _minSpeed: 10
   _maxSpeed: 14
   _maxTorque: 10
   _xRange: 4
   _ySpawnPos: -1
---- !u!135 &1738774537217977176
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8393094588665705602}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.04
-  m_Center: {x: 0, y: 0, z: 0}

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -12,6 +13,8 @@ public class Target : MonoBehaviour
 
     [Header("Effects")]
     [SerializeField] ParticleSystem _explosionParticles;
+    [SerializeField] GameObject _floatingPoints;
+    [SerializeField] GameObject _sensor;
 
     public float _minSpeed = 12;
     public float _maxSpeed = 16;
@@ -37,21 +40,49 @@ public class Target : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Destroy(gameObject);
-        _gameManager.UpdateScoreBoard(_pointValue);
-        Instantiate(_explosionParticles, transform.position, _explosionParticles.transform.rotation);
+        if (tag == "Good")
+        {
+            _floatingPoints.GetComponentInChildren<TextMesh>().text = _pointValue.ToString();
+            _floatingPoints.GetComponentInChildren<TextMesh>().color = Color.green;
+            GameObject instance = Instantiate(_floatingPoints, transform.position, Quaternion.identity);
+            _audioManager.PlayBiteSound();
+            Destroy(instance, 3);
+        }
+        
+        if (gameObject.CompareTag("Skull"))
+        {
+            _audioManager.PlaySkullSound();
+            _floatingPoints.GetComponentInChildren<TextMesh>().text = _pointValue.ToString();
+            _floatingPoints.GetComponentInChildren<TextMesh>().color = Color.red;
+            GameObject instance = Instantiate(_floatingPoints, transform.position, Quaternion.identity);
+            Destroy(instance, 3);
+            //_gameManager.GameOver();
+        }
+
         if (gameObject.CompareTag("Bad"))
         {
             _audioManager.PlayBombSound();
             _gameManager.GameOver();
         }
-        if (gameObject.CompareTag("Good")) _audioManager.PlayBiteSound();
+
+        Destroy(gameObject);
+        _gameManager.UpdateScoreBoard(_pointValue);
+        Instantiate(_explosionParticles, transform.position, _explosionParticles.transform.rotation);
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        if (tag == "Good")
+        {
+            _floatingPoints.GetComponentInChildren<TextMesh>().text = (-_pointValue).ToString();
+            _floatingPoints.GetComponentInChildren<TextMesh>().color = Color.red;
+            GameObject instance = Instantiate(_floatingPoints, _sensor.transform.position + new Vector3(transform.position.x, 4, 0), Quaternion.identity);
+            _audioManager.PlayFartSound();
+            _gameManager.UpdateScoreBoard(-_pointValue);
+            Destroy(instance, 3);
+        }
+
         Destroy(gameObject);
-        _gameManager.UpdateScoreBoard(-_pointValue);
     }
 
     Vector3 RandomForce()
